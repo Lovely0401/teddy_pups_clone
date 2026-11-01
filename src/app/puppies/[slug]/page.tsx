@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { PUPPIES } from '@/data/puppies';
 import { PuppyDetailView } from './PuppyDetailView';
+import { prefixHtmlWithBasePath } from '@/utils/htmlUtils';
 
 export async function generateStaticParams() {
   return PUPPIES.map((puppy) => ({
@@ -52,7 +53,7 @@ export default async function PuppyDetailPage({
   if (fs.existsSync(htmlPath)) {
     const fullHtml = fs.readFileSync(htmlPath, 'utf8');
     const match = fullHtml.match(/^<main([^>]*)>([\s\S]*?)<\/main>$/i);
-    const innerHtml = match ? match[2] : fullHtml;
+    const innerHtml = prefixHtmlWithBasePath(match ? match[2] : fullHtml);
 
     return (
       <main

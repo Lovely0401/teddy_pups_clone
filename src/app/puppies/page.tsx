@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { Metadata } from 'next';
+import { prefixHtmlWithBasePath } from '@/utils/htmlUtils';
 
 export const metadata: Metadata = {
   title: 'Available puppies | TeddyPups U.A.E.',
@@ -12,7 +13,7 @@ export default function PuppiesPage() {
   const filePath = path.join(process.cwd(), 'public', 'processed_puppies.html');
   const fullHtml = fs.readFileSync(filePath, 'utf8');
   const match = fullHtml.match(/^<main([^>]*)>([\s\S]*?)<\/main>$/i);
-  const innerHtml = match ? match[2] : fullHtml;
+  const innerHtml = prefixHtmlWithBasePath(match ? match[2] : fullHtml);
 
   return (
     <main
