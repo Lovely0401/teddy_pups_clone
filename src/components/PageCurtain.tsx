@@ -67,27 +67,14 @@ export function PageCurtain() {
       }
 
       // Check if it's an internal route
-      if (href.startsWith('/')) {
-        e.preventDefault();
-
-        // If clicking the current route, play a quick scurry
-        if (href === pathname) {
+      const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+      if (href.startsWith('/') || (basePath && href.startsWith(basePath))) {
+        // Let the browser / Next.js handle navigation natively without hijacking
+        // Trigger the curtain covering effect during transition
+        const currentPath = window.location.pathname;
+        if (href !== currentPath && href !== currentPath.replace(/\/$/, '')) {
           setState('covering');
-          setTimeout(() => {
-            setState('lifting');
-            setTimeout(() => setState('idle'), 480);
-          }, 280);
-          return;
         }
-
-        // Start covering transition
-        setState('covering');
-        if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
-
-        transitionTimerRef.current = setTimeout(() => {
-          setState('covered');
-          router.push(href);
-        }, 300);
       }
     };
 
