@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import "./original.css";
+@import "tailwindcss";
+
+:root {
+  --font-fraunces: 'Fraunces', Georgia, serif;
+  --font-figtree: 'Figtree', system-ui, -apple-system, sans-serif;
+  --font-shantell: 'Shantell Sans', cursive;
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-figtree);
+  --font-hand: var(--font-shantell);
+  --font-body: var(--font-figtree);
+  --header-h: 4.75rem;
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --color-milk: #fffdf8;
+  --color-cocoa: #2a170e;
+  --color-cocoa-soft: #5a3a28;
+  --color-honey: #f2be6b;
+  --color-honey-soft: #fbe3b4;
+  --color-blush: #f9cdbf;
+  --color-toffee: #c2622b;
+  --color-toffee-deep: #a24a1a;
+  --color-toffee-ink: #8e3f15;
+  --color-sky: #bfddf5;
+  --color-sky-deep: #2f6e9e;
+}
+
+html, body {
+  cursor: url(/cursor/paw.svg) 9 6, auto;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: radial-gradient(circle at 1px 1px, #2a170e17 1px, transparent 1.6px) 0 0 / 26px 26px, linear-gradient(180deg, #fff8ec, #fffdf8 60%);
+  color: var(--color-cocoa);
+  font-family: var(--font-figtree, 'Figtree', sans-serif);
+}
+
+.font-plush {
+  font-family: var(--font-fraunces, 'Fraunces', Georgia, serif);
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+.font-scrawl {
+  font-family: var(--font-shantell, 'Shantell Sans', cursive);
+  font-variation-settings: "INFM" 60, "BNCE" 30;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+/* Lenis smooth scrolling rules */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
