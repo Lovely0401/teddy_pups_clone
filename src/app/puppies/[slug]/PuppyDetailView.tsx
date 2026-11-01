@@ -13,6 +13,11 @@ interface PuppyDetailViewProps {
 export function PuppyDetailView({ puppy }: PuppyDetailViewProps) {
   const [selectedImage, setSelectedImage] = useState<string>(puppy.images[0] || '');
   const isAvailable = puppy.status === 'available';
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const resolveImg = (imgUrl: string) =>
+    basePath && imgUrl.startsWith('/') && !imgUrl.startsWith(basePath)
+      ? `${basePath}${imgUrl}`
+      : imgUrl;
 
   const whatsappMessage = encodeURIComponent(
     `Hi TeddyPups! I'm interested in ${puppy.name}, the ${puppy.breed}: https://puppy.instabizweb.com/puppies/${puppy.slug}`
@@ -27,7 +32,7 @@ export function PuppyDetailView({ puppy }: PuppyDetailViewProps) {
           {/* Main Preview */}
           <div className="relative aspect-square w-full rounded-3xl overflow-hidden border-2 border-[#2a170e] bg-[#fbe3b4]/30 shadow-[6px_6px_0px_#2a170e]">
             <Image
-              src={selectedImage || puppy.images[0]}
+              src={resolveImg(selectedImage || puppy.images[0])}
               alt={`${puppy.name} - ${puppy.breed}`}
               fill
               priority
@@ -75,7 +80,7 @@ export function PuppyDetailView({ puppy }: PuppyDetailViewProps) {
                   }`}
                 >
                   <Image
-                    src={img}
+                    src={resolveImg(img)}
                     alt={`${puppy.name} thumbnail ${idx + 1}`}
                     fill
                     sizes="80px"

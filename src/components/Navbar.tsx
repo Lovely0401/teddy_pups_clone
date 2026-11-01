@@ -18,6 +18,7 @@ const NAV_LINKS = [
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +40,7 @@ export function Navbar() {
         {/* Brand */}
         <Link className="tp-header__brand" aria-label="TeddyPups U.A.E. — home" href="/">
           <Image
-            src="/brand/logo.png"
+            src={`${basePath}/brand/logo.png`}
             alt=""
             width={56}
             height={56}

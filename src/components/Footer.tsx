@@ -1,11 +1,12 @@
 import fs from 'fs';
 import path from 'path';
+import { prefixHtmlWithBasePath } from '@/utils/htmlUtils';
 
 export function Footer() {
   const filePath = path.join(process.cwd(), 'public', 'exact_footer.html');
   const fullHtml = fs.readFileSync(filePath, 'utf8');
   const match = fullHtml.match(/^<footer([^>]*)>([\s\S]*?)<\/footer>$/i);
-  const innerHtml = match ? match[2] : fullHtml;
+  const innerHtml = prefixHtmlWithBasePath(match ? match[2] : fullHtml);
 
   return (
     <footer

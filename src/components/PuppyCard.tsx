@@ -10,7 +10,11 @@ interface PuppyCardProps {
 
 export function PuppyCard({ puppy }: PuppyCardProps) {
   const isAvailable = puppy.status === 'available';
-  const mainImage = puppy.images[0] || 'https://puppy.instabizweb.com/media/Z0ToauDx7Eve/5fffe4d022/b942a5_4b8cfb8204d24eadaf524332aba1dc15-mv2.webp';
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const rawImage = puppy.images[0] || '/media/Z0ToauDx7Eve/5fffe4d022/b942a5_4b8cfb8204d24eadaf524332aba1dc15-mv2.webp';
+  const mainImage = basePath && rawImage.startsWith('/') && !rawImage.startsWith(basePath)
+    ? `${basePath}${rawImage}`
+    : rawImage;
 
   const whatsappMessage = encodeURIComponent(
     `Hi TeddyPups! I'm interested in ${puppy.name} (${puppy.breed}, ${puppy.gender}, age: ${puppy.age}). Could you share more details and photos?`
