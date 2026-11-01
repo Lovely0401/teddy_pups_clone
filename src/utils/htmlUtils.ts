@@ -7,3 +7,4 @@ export function prefixHtmlWithBasePath(html: string): string {
     .replace(/href=(["'])\/(["'])/g, `href=$1${basePath}/$2`)
     .replace(/url\((["'\s]|&quot;)?\/(media|brand|cursor)/g, `url($1${basePath}/$2`);
 }
+

@@ -35,6 +35,8 @@ jobs:
 
       - name: Build Next.js static site
         run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /teddy_pups_clone
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -51,3 +53,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
