@@ -7,10 +7,11 @@ export function prefixHtmlWithBasePath(html: string): string {
     .replace(/href=(["'])\/(["'])/g, `href=$1${basePath}/$2`)
     .replace(/url\((["'\s]|&quot;)?\/(media|brand|cursor)/g, `url($1${basePath}/$2`);
 
-  // Ensure trailing slash on all internal route links for static export
-  res = res.replace(new RegExp(`href=(["'])${basePath}\\/([a-zA-Z0-9_\\-\\/]+?)(["'])`, 'g'), (match, q1, path, q2) => {
-    if (path.endsWith('/') || path.includes('#') || path.includes('.')) return match;
-    return `href=${q1}${basePath}/${path}/${q2}`;
+  // Ensure trailing slash on internal route paths, preserving query params and hashes
+  res = res.replace(new RegExp(`href=(["'])${basePath}\\/([a-zA-Z0-9_\\-\\/]+?)((\\?|#)[^"']*)?(["'])`, 'g'), (match, q1, path, extra, extraMarker, q2) => {
+    if (path.endsWith('/') || path.includes('.')) return match;
+    const suffix = extra || '';
+    return `href=${q1}${basePath}/${path}/${suffix}${q2}`;
   });
 
   return res;

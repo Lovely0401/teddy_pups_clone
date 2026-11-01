@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { MessageCircle, Heart, Sparkles, CheckCircle2 } from 'lucide-react';
 import { Puppy } from '@/types';
@@ -11,6 +10,9 @@ interface PuppyCardProps {
 export function PuppyCard({ puppy }: PuppyCardProps) {
   const isAvailable = puppy.status === 'available';
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const puppyHref = basePath
+    ? `${basePath}/puppies/${puppy.slug}/`
+    : `/puppies/${puppy.slug}/`;
   const rawImage = puppy.images[0] || '/media/Z0ToauDx7Eve/5fffe4d022/b942a5_4b8cfb8204d24eadaf524332aba1dc15-mv2.webp';
   const mainImage = basePath && rawImage.startsWith('/') && !rawImage.startsWith(basePath)
     ? `${basePath}${rawImage}`
@@ -23,7 +25,7 @@ export function PuppyCard({ puppy }: PuppyCardProps) {
   return (
     <div className="card-sketch group flex flex-col h-full overflow-hidden bg-white">
       {/* Image Container */}
-      <Link href={`/puppies/${puppy.slug}`} className="relative aspect-square w-full overflow-hidden bg-[#fbe3b4]/30 block">
+      <a href={puppyHref} className="relative aspect-square w-full overflow-hidden bg-[#fbe3b4]/30 block">
         <Image
           src={mainImage}
           alt={`${puppy.name} - ${puppy.breed}`}
@@ -63,18 +65,18 @@ export function PuppyCard({ puppy }: PuppyCardProps) {
             </span>
           )}
         </div>
-      </Link>
+      </a>
 
       {/* Details Container */}
       <div className="p-5 flex flex-col flex-1 justify-between">
         <div>
           <div className="flex items-start justify-between gap-2 mb-1.5">
             <div>
-              <Link href={`/puppies/${puppy.slug}`} className="hover:text-[#c2622b] transition-colors">
+              <a href={puppyHref} className="hover:text-[#c2622b] transition-colors">
                 <h3 className="font-serif text-2xl font-bold text-[#2a170e]">
                   {puppy.name}
                 </h3>
-              </Link>
+              </a>
               <p className="text-sm font-semibold text-[#c2622b]">
                 {puppy.breed}
               </p>
@@ -107,12 +109,12 @@ export function PuppyCard({ puppy }: PuppyCardProps) {
 
         {/* Action Button */}
         <div className="mt-5 pt-3 border-t border-[#2a170e]/10 flex gap-2">
-          <Link
-            href={`/puppies/${puppy.slug}`}
+          <a
+            href={puppyHref}
             className="flex-1 btn-outline text-xs py-2 text-center"
           >
             View Details
-          </Link>
+          </a>
           {isAvailable ? (
             <a
               href={`https://wa.me/${COMPANY_INFO.whatsappRaw}?text=${whatsappMessage}`}
